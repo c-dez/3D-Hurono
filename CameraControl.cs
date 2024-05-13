@@ -1,15 +1,25 @@
 using Godot;
 using System;
 
+
 public partial class CameraControl : Node3D
 {
-	// Called when the node enters the scene tree for the first time.
+	private CharacterBody3D player;
+	private Node3D camMount;
+
 	public override void _Ready()
 	{
+		Input.MouseMode = Input.MouseModeEnum.Captured;
+		player = GetNode<CharacterBody3D>("..");
+		camMount = GetNode<Node3D>("../CamMount");
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
+    public override void _UnhandledInput(InputEvent @event)
+    {
+		if (@event is InputEventMouseMotion mouseEvent)
+		{
+			Vector2 mouseRelative = mouseEvent.Relative;
+			GD.Print(camMount.Name);
+		}
+    }
 }
